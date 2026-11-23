@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zero-JS Timer — Pure HTML + CSS Experiment | KitWorks Lab</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!--
+    KitWorks Lab Experiment exp001:
+    Pure HTML + CSS Focus Timer (Zero JS).
+    Verified in Chromium with javaScriptEnabled: false.
+  -->
+  <div class="app-root">
+    <!-- Pure-CSS State Machine Inputs (Hidden, Controlled via <label>) -->
+    <input type="checkbox" id="timer-run" class="sr-state" />
+
+    <input type="radio" name="mode" id="mode-focus" class="sr-state" checked />
+    <input type="radio" name="mode" id="mode-break" class="sr-state" />
+    <input type="radio" name="mode" id="mode-sprint" class="sr-state" />
+
+    <input type="radio" name="theme" id="theme-obsidian" class="sr-state" checked />
+    <input type="radio" name="theme" id="theme-paper" class="sr-state" />
+    <input type="radio" name="theme" id="theme-matcha" class="sr-state" />
+
+    <main class="stage">
+      <!-- Top Verification Strip -->
+      <header class="top-strip">
+        <div class="brand-block">
+          <span class="brand-kicker">KITWORKS LAB // EXP-001</span>
+          <h1 class="brand-title">Zero-JS Focus Timer</h1>
+        </div>
+        <div class="proof-badges">
+          <noscript>
+            <span class="badge badge-jsoff">● JS ENGINE: DISABLED</span>
+          </noscript>
+          <span class="badge badge-meta">SCRIPT TAGS: 0</span>
+          <span class="badge badge-meta">HTML + CSS ONLY</span>
+        </div>
+      </header>
+
+      <!-- Main Two-Column Lab Workspace -->
+      <div class="workspace-grid">
+        <!-- Left: Live Timer Canvas -->
+        <section class="timer-card" aria-label="Pure CSS Countdown Timer">
+          <div class="timer-card-head">
+            <div class="mode-readout">
+              <span class="mode-tag focus-only">FOCUS SESSION · 25 MIN</span>
+              <span class="mode-tag break-only">SHORT BREAK · 5 MIN</span>
+              <span class="mode-tag sprint-only">QUICK SPRINT · 1 MIN</span>
+            </div>
+            <div class="state-pill">
+              <span class="state-dot"></span>
+              <span class="state-text-paused">PAUSED</span>
+              <span class="state-text-running">RUNNING</span>
+            </div>
+          </div>
+
+          <!-- Real Ticking Digits via CSS @property + counter() -->
+          <div class="clock-well">
+            <div class="clock-digits" aria-live="off"></div>
+            <div class="clock-sub">
+              <span>@property --sec-left (&lt;integer&gt;)</span>
+              <span>content: counter(m, decimal-leading-zero) ":" counter(s)</span>
+            </div>
+          </div>
+
+          <!-- Pure CSS Progress Track synced to the same --sec-left variable -->
+          <div class="progress-wrap">
+            <div class="progress-track">
+              <div class="progress-fill"></div>
+            </div>
+            <div class="progress-meta">
+              <span class="pm-left">animation-play-state: <strong class="aps-paused">paused</strong><strong class="aps-running">running</strong></span>
+              <span class="pm-right">0 lines of JavaScript</span>
+            </div>
+          </div>
+
+          <!-- Primary Start / Pause Control (Checkbox Label) -->
+          <div class="primary-controls">
+            <label for="timer-run" class="btn-primary">
+              <span class="label-start">▶ START TIMER</span>
+              <span class="label-pause">❚❚ PAUSE TIMER</span>
+            </label>
+            <a href="" class="btn-reload" title="Reload page to reset without JS">↺ RELOAD RESET</a>
+          </div>
+        </section>
+
+        <!-- Right: Mode & Theme Switcher Panel (Radio Labels) -->
+        <aside class="control-deck" aria-label="CSS State Controls">
+          <div class="deck-section">
+            <div class="deck-label">MODE (:checked ~ .stage)</div>
+            <div class="mode-tabs">
+              <label for="mode-focus" class="tab-btn tab-focus">
+                <span class="tb-name">Focus</span>
+                <span class="tb-dur">25:00</span>
+              </label>
+              <label for="mode-break" class="tab-btn tab-break">
+                <span class="tb-name">Break</span>
+                <span class="tb-dur">05:00</span>
+              </label>
+              <label for="mode-sprint" class="tab-btn tab-sprint">
+                <span class="tb-name">Sprint</span>
+                <span class="tb-dur">01:00</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="deck-section">
+            <div class="deck-label">THEME (CSS Custom Properties)</div>
+            <div class="theme-grid">
+              <label for="theme-obsidian" class="theme-chip chip-obsidian">
+                <span class="swatch sw-obsidian"></span>
+                <span>Obsidian</span>
+              </label>
+              <label for="theme-paper" class="theme-chip chip-paper">
+                <span class="swatch sw-paper"></span>
+                <span>Paper Ink</span>
+              </label>
+              <label for="theme-matcha" class="theme-chip chip-matcha">
+                <span class="swatch sw-matcha"></span>
+                <span>Matcha</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="deck-section mech-box">
+            <div class="deck-label">HOW IT WORKS WITHOUT JS</div>
+            <ul class="mech-list">
+              <li><code>#timer-run:checked</code> → <code>animation-play-state: running</code></li>
+              <li><code>@property --sec-left</code> → CSS integer interpolation</li>
+              <li><code>counter(m) ":" counter(s)</code> → live digits in <code>::after</code></li>
+              <li><code>input[type=radio]:checked</code> → mode &amp; theme state</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
